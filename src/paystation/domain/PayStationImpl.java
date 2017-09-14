@@ -1,5 +1,6 @@
 package paystation.domain;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -25,6 +26,7 @@ public class PayStationImpl implements PayStation {
     
     private int insertedSoFar;
     private int timeBought;
+    private int totalCentsCollected;
 
     @Override
     public void addPayment(int coinValue)
@@ -48,25 +50,25 @@ public class PayStationImpl implements PayStation {
     @Override
     public Receipt buy() {
         Receipt r = new ReceiptImpl(timeBought);
+        empty();
         reset();
         return r;
     }
 
     @Override
-    public Map<Integer, Integer> cancel() {
+    public HashMap<Integer, Integer> cancel() {
         Map<Integer, Integer> [] map = new Map[5];
         reset();
         return null;
     }
     
     private void reset() {
-        timeBought = insertedSoFar = 0;
+        timeBought = insertedSoFar =  0;
     }
 
-    public int empty(){
-
-        int totalCoins = 0;
-
-        return totalCoins;
+    public int empty() {
+        totalCentsCollected = insertedSoFar;
+        reset();
+        return totalCentsCollected;
     }
 }

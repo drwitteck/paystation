@@ -138,4 +138,17 @@ public class PayStationImplTest {
         assertEquals("Insert after cancel should work",
                 10, ps.readDisplay());
     }
+
+    /**
+     * Verify that empty returns the total amount collected by the machine since the last transaction
+     *
+     */
+    @Test
+    public void shouldReturnTotalMoneyCollected()
+            throws IllegalCoinException{
+        ps.addPayment(25);
+        //ps.buy();
+        assertEquals("Returned amount should be 10", 25, ps.empty());
+
+    }
 }
