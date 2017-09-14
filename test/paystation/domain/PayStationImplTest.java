@@ -144,10 +144,29 @@ public class PayStationImplTest {
      *
      */
     @Test
-    public void shouldReturnTotalMoneyCollected()
+    public void shouldReturnTotalCoinAmountCollected()
             throws IllegalCoinException{
+        int total = ps.empty();
+        ps.addPayment(5);
+        ps.buy();
+
+        ps.addPayment(10);
+        ps.buy();
+
         ps.addPayment(25);
-        //ps.buy();
-        assertEquals("Returned amount should be 10", 25, ps.empty());
+        ps.buy();
+
+        total = ps.empty();
+        assertEquals("Total amount should be 40", 40, total);
+    }
+
+    @Test
+    public void shouldResetTotalCoinAmountCollectedAfterEmpty()
+            throws IllegalCoinException{
+        int total;
+        ps.addPayment(5);
+
+        total = ps.empty();
+        assertEquals("Total shoud be 0", 0, total);
     }
 }
