@@ -51,7 +51,7 @@ public interface PayStation {
     /**
      * Cancel the present transaction. Resets the machine for a new transaction.
      */
-    HashMap<Integer, Integer> cancel();
+    public HashMap<Integer, Integer> cancel();
 
     public int empty();
 }

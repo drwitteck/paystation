@@ -50,6 +50,7 @@ public class PayStationImpl implements PayStation {
     @Override
     public Receipt buy() {
         Receipt r = new ReceiptImpl(timeBought);
+        totalCentsCollected += insertedSoFar;
         empty();
         reset();
         return r;
@@ -57,8 +58,7 @@ public class PayStationImpl implements PayStation {
 
     @Override
     public HashMap<Integer, Integer> cancel() {
-        Map<Integer, Integer> [] map = new Map[5];
-        reset();
+
         return null;
     }
     
@@ -67,8 +67,8 @@ public class PayStationImpl implements PayStation {
     }
 
     public int empty() {
-        totalCentsCollected = insertedSoFar;
-        reset();
-        return totalCentsCollected;
+        int tempCentsCollected = totalCentsCollected;
+        totalCentsCollected = 0;
+        return tempCentsCollected;
     }
 }

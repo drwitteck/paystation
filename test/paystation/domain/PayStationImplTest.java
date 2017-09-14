@@ -149,6 +149,5 @@ public class PayStationImplTest {
         ps.addPayment(25);
         //ps.buy();
         assertEquals("Returned amount should be 10", 25, ps.empty());
-
     }
 }
