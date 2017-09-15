@@ -26,17 +26,28 @@ public class PayStationImpl implements PayStation {
     private int insertedSoFar;
     private int timeBought;
     private int totalCoinValueCollected;
+    private HashMap<Integer, Integer> coinDenominations = new HashMap<>();
+    private int numberOfNickels;
+    private int numberOfDimes;
+    private int numberOfQuarters;
 
     @Override
     public void addPayment(int coinValue)
             throws IllegalCoinException {
         switch (coinValue) {
-            case 5: break;
-            case 10: break;
-            case 25: break;
+            case 5: {
+                coinDenominations.put(5, numberOfNickels++);
+            } break;
+            case 10: {
+                coinDenominations.put(10, numberOfDimes++);
+            } break;
+            case 25: {
+                coinDenominations.put(25, numberOfQuarters++);
+            } break;
             default:
                 throw new IllegalCoinException("Invalid coin: " + coinValue);
         }
+
         insertedSoFar += coinValue;
         timeBought = insertedSoFar / 5 * 2;
     }
@@ -54,10 +65,21 @@ public class PayStationImpl implements PayStation {
         return r;
     }
 
+    /** Cancel the present transaction. Resets the paystation for a
+     * new transaction.
+     * @return A Map defining the coins returned to the user.
+     * The key is the coin type and the associated value is the
+     * number of these coins that are returned.
+     * The Map object is never null even if no coins are returned.
+     * The Map will only contain only keys for coins to be returned.
+     * The Map will be cleared after a cancel or buy.
+     */
     @Override
     public HashMap<Integer, Integer> cancel() {
-
-        return null;
+        HashMap<Integer, Integer> coinsReturned = new HashMap<>();
+        coinDenominations.putAll(coinsReturned);
+        reset();
+        return coinsReturned;
     }
     
     private void reset() {

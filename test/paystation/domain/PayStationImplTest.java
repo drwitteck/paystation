@@ -157,7 +157,7 @@ public class PayStationImplTest {
         ps.buy();
 
         total = ps.empty();
-        assertEquals("Total amount should be 40", 40, total);
+        assertEquals("Total should be 40", 40, total);
     }
 
     @Test
@@ -167,6 +167,6 @@ public class PayStationImplTest {
         ps.addPayment(5);
 
         total = ps.empty();
-        assertEquals("Total shoud be 0", 0, total);
+        assertEquals("Total should be 0", 0, total);
     }
 }
