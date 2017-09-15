@@ -61,6 +61,7 @@ public class PayStationImpl implements PayStation {
     public Receipt buy() {
         Receipt r = new ReceiptImpl(timeBought);
         totalCoinValueCollected += insertedSoFar;
+        coinDenominations.clear();
         reset();
         return r;
     }
@@ -78,6 +79,7 @@ public class PayStationImpl implements PayStation {
     public HashMap<Integer, Integer> cancel() {
         HashMap<Integer, Integer> coinsReturned = new HashMap<>();
         coinDenominations.putAll(coinsReturned);
+        coinDenominations.clear();
         reset();
         return coinsReturned;
     }
