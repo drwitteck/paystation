@@ -14,6 +14,7 @@ package paystation.domain;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import java.util.HashMap;
 
 public class PayStationImplTest {
 
@@ -160,13 +161,37 @@ public class PayStationImplTest {
         assertEquals("Total should be 40", 40, total);
     }
 
+    /**
+     * Verify that total coins collected resets to zero after a transaction
+     * @throws IllegalCoinException
+     */
     @Test
-    public void shouldResetTotalCoinAmountCollectedAfterEmpty()
+    public void shouldResetTotalCoinAmountCollectedOnCallToEmpty()
             throws IllegalCoinException{
         int total;
         ps.addPayment(5);
 
+        ps.addPayment(10);
+
+        ps.addPayment(25);
+
         total = ps.empty();
         assertEquals("Total should be 0", 0, total);
+    }
+
+    /**
+     * Verify that call to cancel returns an empty map
+     */
+    @Test
+    public void shouldReturnEmptyMapOnCallToCancel()
+            throws IllegalCoinException{
+        HashMap testMap;
+
+        ps.addPayment(5);
+        ps.buy();
+
+        testMap = ps.cancel();
+
+        assertEquals("Map should be empty", testMap.isEmpty(), true);
     }
 }
