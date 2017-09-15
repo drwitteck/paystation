@@ -27,9 +27,9 @@ public class PayStationImpl implements PayStation {
     private int timeBought;
     private int totalCoinValueCollected;
     private HashMap<Integer, Integer> coinDenominations = new HashMap<>();
-    private int numberOfNickels;
-    private int numberOfDimes;
-    private int numberOfQuarters;
+    private int numberOfNickels = 0;
+    private int numberOfDimes = 0;
+    private int numberOfQuarters = 0;
 
     @Override
     public void addPayment(int coinValue)
@@ -78,7 +78,6 @@ public class PayStationImpl implements PayStation {
     public HashMap<Integer, Integer> cancel() {
         HashMap<Integer, Integer> coinsReturned = new HashMap<>();
         coinDenominations.putAll(coinsReturned);
-        coinDenominations.clear();
         reset();
         return coinsReturned;
     }

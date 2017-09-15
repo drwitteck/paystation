@@ -11,6 +11,7 @@
  */
 package paystation.domain;
 
+import org.jcp.xml.dsig.internal.dom.DOMBase64Transform;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -140,29 +141,30 @@ public class PayStationImplTest {
                 10, ps.readDisplay());
     }
 
-    /**
-     * Verify that empty returns the total amount collected by the machine since the last transaction
+    /**PASSES
+     * Verify that call to empty returns the total amount entered
      *
      */
     @Test
     public void shouldReturnTotalCoinAmountCollected()
             throws IllegalCoinException{
-        int total = ps.empty();
+        int total;
+
         ps.addPayment(5);
         ps.buy();
-
         ps.addPayment(10);
         ps.buy();
-
         ps.addPayment(25);
         ps.buy();
 
         total = ps.empty();
+
         assertEquals("Total should be 40", 40, total);
     }
 
-    /**
-     * Verify that total coins collected resets to zero after a transaction
+
+    /**PASSES
+     * Verify that call to empty resets total coins collected to zero
      * @throws IllegalCoinException
      */
     @Test
@@ -170,16 +172,33 @@ public class PayStationImplTest {
             throws IllegalCoinException{
         int total;
         ps.addPayment(5);
-
         ps.addPayment(10);
-
         ps.addPayment(25);
 
         total = ps.empty();
         assertEquals("Total should be 0", 0, total);
     }
 
-    /**
+    /**PASSES
+     * Verify that canceled entry does not add to the amount returned by empty
+     */
+    @Test
+    public void shouldNotAddToAmountReturnedByEmptyOnCancelCall()
+            throws IllegalCoinException{
+        int total;
+
+        ps.addPayment(5);
+        ps.addPayment(10);
+        ps.addPayment(25);
+
+        ps.cancel();
+
+        total = ps.empty();
+
+        assertEquals("Total should be zero", total, 0);
+    }
+
+    /**PASSES
      * Verify that call to cancel returns an empty map
      */
     @Test
@@ -188,7 +207,6 @@ public class PayStationImplTest {
         HashMap testMap;
 
         ps.addPayment(5);
-        ps.buy();
 
         testMap = ps.cancel();
 
