@@ -212,4 +212,32 @@ public class PayStationImplTest {
 
         assertEquals("Map should be empty", testMap.isEmpty(), true);
     }
+
+    /**
+     * Call to buy clears the map
+     */
+    @Test
+    public void callToBuyClearsTheMap()
+        throws IllegalCoinException{
+
+        ps.addPayment(5);
+        ps.buy();
+
+        //assertTrue("Map should be empty", testMap.isEmpty());
+    }
+
+    /**
+     * Call to cancel returns a map containing one coin entered.
+     */
+    @Test
+    public void shouldReturnOneCoinMapOnCallToCancel()
+            throws IllegalCoinException{
+        HashMap testMap;
+
+        ps.addPayment(5);
+
+        testMap = ps.cancel();
+
+
+    }
 }
