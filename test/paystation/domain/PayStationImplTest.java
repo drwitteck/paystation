@@ -213,31 +213,65 @@ public class PayStationImplTest {
         assertEquals("Map should be empty", testMap.isEmpty(), true);
     }
 
-    /**
+    /**PASSES
      * Call to buy clears the map
      */
     @Test
     public void callToBuyClearsTheMap()
         throws IllegalCoinException{
+        HashMap testMap;
 
         ps.addPayment(5);
         ps.buy();
 
-        //assertTrue("Map should be empty", testMap.isEmpty());
+        testMap = ps.cancel();
+
+        assertTrue("Map should be empty", testMap.isEmpty());
     }
 
-    /**
+    /**PASSES
      * Call to cancel returns a map containing one coin entered.
      */
     @Test
     public void shouldReturnOneCoinMapOnCallToCancel()
             throws IllegalCoinException{
-        HashMap testMap;
+        HashMap<Integer, Integer> coinDenominations = new HashMap<>();
+        coinDenominations.put(5, 1);
+        int coin = coinDenominations.get(5);
 
         ps.addPayment(5);
 
-        testMap = ps.cancel();
+        coinDenominations = ps.cancel();
 
+        assertEquals("Should equal 1", coin, 1);
+    }
+
+    /**
+     * Call to cancel returns a map containing a mixture of coins entered.
+     */
+    @Test
+    public void shouldReturnMultipleCoinMapOnCallToCancel()
+        throws IllegalCoinException{
+        HashMap<Integer, Integer> coinDenominations = new HashMap<>();
+        coinDenominations.put(5, 1);
+        coinDenominations.put(10, 2);
+        coinDenominations.put(25, 3);
+        int nickel = coinDenominations.get(5);
+        int dimes = coinDenominations.get(10);
+        int quarters = coinDenominations.get(25);
+
+        ps.addPayment(5);
+        ps.addPayment(10);
+        ps.addPayment(10);
+        ps.addPayment(25);
+        ps.addPayment(25);
+        ps.addPayment(25);
+
+        coinDenominations = ps.cancel();
+
+        assertEquals("Should equal 1", nickel, 1);
+        assertEquals("Should equal 2", dimes, 2);
+        assertEquals("Should equal 3", quarters, 3);
 
     }
 }
