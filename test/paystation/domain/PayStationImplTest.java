@@ -141,7 +141,7 @@ public class PayStationImplTest {
                 10, ps.readDisplay());
     }
 
-    /**PASSES
+    /**
      * Verify that call to empty returns the total amount entered
      *
      */
@@ -163,7 +163,7 @@ public class PayStationImplTest {
     }
 
 
-    /**PASSES
+    /**
      * Verify that call to empty resets total coins collected to zero
      * @throws IllegalCoinException
      */
@@ -198,7 +198,7 @@ public class PayStationImplTest {
         assertEquals("Total should be zero", total, 0);
     }
 
-    /**PASSES
+    /**
      * Verify that call to cancel returns an empty map
      */
     @Test
@@ -213,7 +213,7 @@ public class PayStationImplTest {
         assertEquals("Map should be empty", testMap.isEmpty(), true);
     }
 
-    /**PASSES
+    /**
      * Call to buy clears the map
      */
     @Test
@@ -229,7 +229,7 @@ public class PayStationImplTest {
         assertTrue("Map should be empty", testMap.isEmpty());
     }
 
-    /**PASSES
+    /**
      * Call to cancel returns a map containing one coin entered.
      */
     @Test
@@ -272,6 +272,21 @@ public class PayStationImplTest {
         assertEquals("Should equal 1", nickel, 1);
         assertEquals("Should equal 2", dimes, 2);
         assertEquals("Should equal 3", quarters, 3);
+    }
+
+    /**
+     * Call to cancel returns a map that does not contain a key for a coin not entered.
+     */
+    @Test
+    public void shouldNotContainKeyForCoinNotEntered()
+        throws IllegalCoinException{
+        HashMap testMap;
+
+        ps.addPayment(5);
+
+        testMap = ps.cancel();
+
+        assertFalse(testMap.containsKey(25));
 
     }
 }
