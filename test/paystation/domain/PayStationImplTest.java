@@ -179,7 +179,7 @@ public class PayStationImplTest {
         assertEquals("Total should be 0", 0, total);
     }
 
-    /**PASSES
+    /**
      * Verify that canceled entry does not add to the amount returned by empty
      */
     @Test
