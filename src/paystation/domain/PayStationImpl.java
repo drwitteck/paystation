@@ -22,6 +22,13 @@ import java.util.HashMap;
  * purposes. For any commercial use, see http://www.baerbak.com/
  */
 public class PayStationImpl implements PayStation {
+
+    /*public enum Town {ALPHATOWN, BETATOWN}
+    public Town town;
+
+    public PayStationImpl(Town town){
+        this.town = town;
+    }*/
     
     private int insertedSoFar;
     private int timeBought;

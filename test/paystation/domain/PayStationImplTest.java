@@ -289,4 +289,24 @@ public class PayStationImplTest {
         assertFalse(testMap.containsKey(25));
 
     }
+
+    @Test
+    public void shouldImplementLinearRateIfAlphaTown()
+            throws IllegalCoinException{
+
+    }
+
+    @Test
+    public void shouldImplementProgressiveRateIfBetaTown()
+            throws IllegalCoinException{
+
+    }
+
+    @Test
+    public void shouldImplementAlternatingRateIfGammaTown()
+            throws IllegalCoinException{
+
+    }
+
+
 }
