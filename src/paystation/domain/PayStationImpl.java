@@ -22,14 +22,6 @@ import java.util.HashMap;
  * purposes. For any commercial use, see http://www.baerbak.com/
  */
 public class PayStationImpl implements PayStation {
-
-    /*public enum Town {ALPHATOWN, BETATOWN}
-    public Town town;
-
-    public PayStationImpl(Town town){
-        this.town = town;
-    }*/
-    
     private int insertedSoFar;
     private int timeBought;
     private int totalCoinValueCollected;
@@ -37,6 +29,16 @@ public class PayStationImpl implements PayStation {
     private int numberOfNickels = 0;
     private int numberOfDimes = 0;
     private int numberOfQuarters = 0;
+    private RateStrategy rateStrategy;
+
+    public PayStationImpl(RateStrategy rateStrategy) {
+        this.rateStrategy = rateStrategy;
+    }
+
+    public PayStationImpl(ProgressiveRateStrategy progressiveRateStrategy) {
+        this.rateStrategy = progressiveRateStrategy;
+    }
+
 
     @Override
     public void addPayment(int coinValue)
@@ -44,10 +46,10 @@ public class PayStationImpl implements PayStation {
         switch (coinValue) {
             case 5: {
                 coinDenominations.put(5, numberOfNickels++);
-            } break;
+            }
             case 10: {
                 coinDenominations.put(10, numberOfDimes++);
-            } break;
+            }
             case 25: {
                 coinDenominations.put(25, numberOfQuarters++);
             } break;
@@ -56,7 +58,7 @@ public class PayStationImpl implements PayStation {
         }
 
         insertedSoFar += coinValue;
-        timeBought = insertedSoFar / 5 * 2;
+        timeBought = rateStrategy.parkingRateCalculation(insertedSoFar);
     }
 
     @Override

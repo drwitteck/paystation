@@ -11,19 +11,17 @@
  */
 package paystation.domain;
 
-import org.jcp.xml.dsig.internal.dom.DOMBase64Transform;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import java.util.HashMap;
 
 public class PayStationImplTest {
-
     PayStation ps;
 
     @Before
     public void setup() {
-        ps = new PayStationImpl();
+        ps = new PayStationImpl(new LinearRateStrategy());
     }
 
     /**
@@ -289,24 +287,4 @@ public class PayStationImplTest {
         assertFalse(testMap.containsKey(25));
 
     }
-
-    @Test
-    public void shouldImplementLinearRateIfAlphaTown()
-            throws IllegalCoinException{
-
-    }
-
-    @Test
-    public void shouldImplementProgressiveRateIfBetaTown()
-            throws IllegalCoinException{
-
-    }
-
-    @Test
-    public void shouldImplementAlternatingRateIfGammaTown()
-            throws IllegalCoinException{
-
-    }
-
-
 }
