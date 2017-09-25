@@ -29,16 +29,16 @@ public class PayStationImpl implements PayStation {
     private int numberOfNickels = 0;
     private int numberOfDimes = 0;
     private int numberOfQuarters = 0;
+
     private RateStrategy rateStrategy;
 
     public PayStationImpl(RateStrategy rateStrategy) {
         this.rateStrategy = rateStrategy;
     }
 
-    public PayStationImpl(ProgressiveRateStrategy progressiveRateStrategy) {
-        this.rateStrategy = progressiveRateStrategy;
+    public PayStationImpl() {
+        rateStrategy = new LinearRateStrategy();
     }
-
 
     @Override
     public void addPayment(int coinValue)

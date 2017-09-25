@@ -24,6 +24,22 @@ public class PayStationImplTest {
         ps = new PayStationImpl(new LinearRateStrategy());
     }
 
+    //Limits the amount of addPayment calls required for higher dollar amounts
+    public void addHalfDollar()
+        throws IllegalCoinException{
+        ps.addPayment(25);
+        ps.addPayment(25);
+    }
+
+    //Limits the amount of addPayment calls required for higher dollar amounts
+    public void addDollar()
+        throws IllegalCoinException{
+        ps.addPayment(25);
+        ps.addPayment(25);
+        ps.addPayment(25);
+        ps.addPayment(25);
+    }
+
     /**
      * Entering 5 cents should make the display report 2 minutes parking time.
      */
@@ -112,11 +128,13 @@ public class PayStationImplTest {
         // verify that the display reads 0
         assertEquals("Display should have been cleared",
                 0, ps.readDisplay());
+
         // verify that a following buy scenario behaves properly
         ps.addPayment(10);
         ps.addPayment(25);
         assertEquals("Next add payment should display correct time",
                 14, ps.readDisplay());
+
         Receipt r = ps.buy();
         assertEquals("Next buy should return valid receipt",
                 14, r.value());
@@ -134,6 +152,7 @@ public class PayStationImplTest {
         ps.cancel();
         assertEquals("Cancel should clear display",
                 0, ps.readDisplay());
+
         ps.addPayment(25);
         assertEquals("Insert after cancel should work",
                 10, ps.readDisplay());
@@ -286,5 +305,40 @@ public class PayStationImplTest {
 
         assertFalse(testMap.containsKey(25));
 
+    }
+
+    /**
+     * Call to buy should implement Progressive Rate correctly when amount entered is 150 - 350
+     */
+    @Test
+    public void shouldDisplay120MinFor350cents()
+        throws IllegalCoinException{
+        ps = new PayStationImpl(new ProgressiveRateStrategy());
+
+        addDollar();
+        addDollar();
+        addDollar();
+        addHalfDollar();
+
+        assertEquals("Progressive Rate should give 120 min for 350 cents", 120, ps.readDisplay());
+    }
+
+    /**
+     * Call to buy should implement Progressive Rate correctly when amount entered exceeds 350
+     */
+    @Test
+    public void shouldDisplay180MinFor650cents()
+            throws IllegalCoinException{
+        ps = new PayStationImpl(new ProgressiveRateStrategy());
+
+        addDollar();
+        addDollar();
+        addDollar();
+        addDollar();
+        addDollar();
+        addDollar();
+        addHalfDollar();
+
+        assertEquals("Progressive Rate should give 120 min for 350 cents", 180, ps.readDisplay());
     }
 }
