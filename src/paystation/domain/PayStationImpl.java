@@ -1,6 +1,7 @@
 package paystation.domain;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Implementation of the pay station.
@@ -25,7 +26,7 @@ public class PayStationImpl implements PayStation {
     private int insertedSoFar;
     private int timeBought;
     private int totalCoinValueCollected;
-    private HashMap<Integer, Integer> coinDenominations = new HashMap<>();
+    private Map<Integer, Integer> coinDenominations = new HashMap<>();
     private int numberOfNickels = 0;
     private int numberOfDimes = 0;
     private int numberOfQuarters = 0;
@@ -45,13 +46,15 @@ public class PayStationImpl implements PayStation {
             throws IllegalCoinException {
         switch (coinValue) {
             case 5: {
-                coinDenominations.put(5, numberOfNickels++);
+                coinDenominations.put(5, ++numberOfNickels);
+                break;
             }
             case 10: {
-                coinDenominations.put(10, numberOfDimes++);
+                coinDenominations.put(10, ++numberOfDimes);
+                break;
             }
             case 25: {
-                coinDenominations.put(25, numberOfQuarters++);
+                coinDenominations.put(25, ++numberOfQuarters);
             } break;
             default:
                 throw new IllegalCoinException("Invalid coin: " + coinValue);
@@ -84,9 +87,8 @@ public class PayStationImpl implements PayStation {
      * The Map will be cleared after a cancel or buy.
      */
     @Override
-    public HashMap<Integer, Integer> cancel() {
-        HashMap<Integer, Integer> coinsReturned = new HashMap<>();
-        coinDenominations.putAll(coinsReturned);
+    public Map<Integer, Integer> cancel() {
+        Map<Integer, Integer> coinsReturned = new HashMap<>(coinDenominations);
         reset();
         return coinsReturned;
     }

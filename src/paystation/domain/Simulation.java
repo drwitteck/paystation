@@ -1,5 +1,7 @@
 package paystation.domain;
 
+import com.sun.xml.internal.ws.api.ha.HaInfo;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -8,12 +10,14 @@ import java.util.Scanner;
 public class Simulation {
     public static void main(String[] args)
         throws IllegalCoinException {
-        PayStationImpl payStation = new PayStationImpl();
+        PayStationImpl payStation = new PayStationImpl(new LinearRateStrategy());
+        RateStrategy rateStrategy;
         int userChoice;
         Scanner in = new Scanner(System.in);
 
         while(true){
             displayMenu();
+
             userChoice = in.nextInt();
 
             switch (userChoice){
@@ -44,7 +48,7 @@ public class Simulation {
                         Receipt r = payStation.buy();
                         System.out.println("Here is you receipt:\n" + "You have purchased: " + r.value() + " minutes.");
                         System.out.println("");
-                        System.exit(0);
+                        break;
                     }
                     break;
                 }
@@ -53,24 +57,25 @@ public class Simulation {
                     System.out.println("Thank you for using Pay Station");
                     System.out.println("Here is you receipt:\n" + "You have purchased: " + r.value() + " minutes.");
                     System.out.println("");
-                    System.exit(0);
+                    break;
                 }
                 case 4:{
-                    for (HashMap.Entry<Integer, Integer> entry : payStation.cancel().entrySet()) {
-                        System.out.println("Coin Value: " + entry.getKey() + " --- Returned Amount "
-                                + entry.getValue());
+                    System.out.println("Cancel");
+                    for (Map.Entry<Integer, Integer> entry : payStation.cancel().entrySet()) {
+                        System.out.println("Coin Value: " + entry.getKey() + " amount " + entry.getValue());
                     }
+                    break;
                 }
                 case 5:{
-                    int maintenanceCoice;
+                    int maintenanceChoice;
 
                     System.out.println("Please enter your choice\n" +
                             "1: Alphatown\n" +
                             "2: Betatown\n" +
                             "3: Gammatown");
-                    maintenanceCoice = in.nextInt();
+                    maintenanceChoice = in.nextInt();
 
-                    switch (maintenanceCoice){
+                    switch (maintenanceChoice){
                         case 1:{
                             payStation = new PayStationImpl(new LinearRateStrategy());
                             System.out.println("Application changed to Alphatown Rate Strategy");
@@ -91,7 +96,7 @@ public class Simulation {
                         }
                         default:{
                             System.out.println("Not a valid selection.");
-                            System.exit(0);
+                            break;
                         }
                     }
                     break;
@@ -113,6 +118,6 @@ public class Simulation {
                 "3: Buy Ticket\n" +
                 "4: Cancel\n" +
                 "5: Change Rate Strategy\n" +
-                "6: To Exit the Application");
+                "6: To Exit the Application\n");
     }
 }

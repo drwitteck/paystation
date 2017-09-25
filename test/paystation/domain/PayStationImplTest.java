@@ -15,6 +15,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import java.util.HashMap;
+import java.util.Map;
 
 public class PayStationImplTest {
     PayStation ps;
@@ -221,7 +222,7 @@ public class PayStationImplTest {
     @Test
     public void shouldReturnEmptyMapOnCallToCancel()
             throws IllegalCoinException{
-        HashMap testMap;
+        Map<Integer, Integer> testMap;
 
         ps.addPayment(5);
 
@@ -236,7 +237,7 @@ public class PayStationImplTest {
     @Test
     public void callToBuyClearsTheMap()
         throws IllegalCoinException{
-        HashMap testMap;
+        Map<Integer, Integer> testMap;
 
         ps.addPayment(5);
         ps.buy();
@@ -252,7 +253,7 @@ public class PayStationImplTest {
     @Test
     public void shouldReturnOneCoinMapOnCallToCancel()
             throws IllegalCoinException{
-        HashMap<Integer, Integer> coinDenominations = new HashMap<>();
+        Map<Integer, Integer> coinDenominations = new HashMap<>();
         coinDenominations.put(5, 1);
         int coin = coinDenominations.get(5);
 
@@ -269,7 +270,7 @@ public class PayStationImplTest {
     @Test
     public void shouldReturnMultipleCoinMapOnCallToCancel()
         throws IllegalCoinException{
-        HashMap<Integer, Integer> coinDenominations = new HashMap<>();
+        Map<Integer, Integer> coinDenominations = new HashMap<>();
         coinDenominations.put(5, 1);
         coinDenominations.put(10, 2);
         coinDenominations.put(25, 3);
@@ -281,8 +282,7 @@ public class PayStationImplTest {
         ps.addPayment(10);
         ps.addPayment(10);
         ps.addPayment(25);
-        ps.addPayment(25);
-        ps.addPayment(25);
+        addHalfDollar();
 
         coinDenominations = ps.cancel();
 
@@ -297,7 +297,7 @@ public class PayStationImplTest {
     @Test
     public void shouldNotContainKeyForCoinNotEntered()
         throws IllegalCoinException{
-        HashMap testMap;
+        Map<Integer, Integer> testMap;
 
         ps.addPayment(5);
 
