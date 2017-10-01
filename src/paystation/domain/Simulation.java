@@ -123,5 +123,6 @@ public class Simulation {
                 "4: Cancel\n" +
                 "5: Maintenance Only - Change Rate Strategy\n" +
                 "6: To Exit the Application\n");
+        System.out.println("");
     }
 }
