@@ -46,7 +46,7 @@ public class Simulation {
                         displayMenu();
                     } else if(status == 3){
                         Receipt r = payStation.buy();
-                        System.out.println("Here is you receipt:\n" + "You have purchased: " + r.value() + " minutes.");
+                        System.out.println("***Here is you receipt***\n" + "You have purchased: " + r.value() + " minutes.");
                         System.out.println("");
                         break;
                     }
@@ -60,10 +60,14 @@ public class Simulation {
                     break;
                 }
                 case 4:{
-                    System.out.println("Cancel");
+                    int total = 0;
+                    System.out.println("Canceled. Returning coins...");
                     for (Map.Entry<Integer, Integer> entry : payStation.cancel().entrySet()) {
-                        System.out.println("Coin Value: " + entry.getKey() + " amount " + entry.getValue());
+                        total += entry.getKey() * entry.getValue();
+                        System.out.println("Coin Value: " + entry.getKey() + ".  " + "Total number of coins: " + entry.getValue());
                     }
+                    System.out.println("Total cents returned: " + total);
+                    System.out.println("");
                     break;
                 }
                 case 5:{
@@ -117,7 +121,7 @@ public class Simulation {
                 "2: Display\n" +
                 "3: Buy Ticket\n" +
                 "4: Cancel\n" +
-                "5: Change Rate Strategy\n" +
+                "5: Maintenance Only - Change Rate Strategy\n" +
                 "6: To Exit the Application\n");
     }
 }
