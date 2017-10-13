@@ -24,6 +24,4 @@ public class LinearRateStrategyTest {
         assertEquals(300 / 5 * 2, rs.parkingRateCalculation(300));
 
     }
-
-
 }

@@ -44,7 +44,7 @@ public class Simulation {
                     status = in.nextInt();
                     if(1 == status){
                         displayMenu();
-                    } else if(status == 3){
+                    } else if(3 == status){
                         Receipt r = payStation.buy();
                         System.out.println("***Here is you receipt***\n" + "You have purchased: " + r.value() + " minutes.");
                         System.out.println("");
